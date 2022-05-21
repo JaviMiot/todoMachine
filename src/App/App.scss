@@ -1,0 +1,64 @@
+input {
+  outline: none;
+  border-radius: 15px;
+  border: 1px solid gray;
+  height: 32px;
+  padding: 6px 12px;
+}
+
+.App {
+  display: flex;
+  justify-content: space-between;
+  width: 100%;
+  padding: 5% 10%;
+
+  .todoAdd-container {
+    display: flex;
+    justify-content: center;
+    width: 100%;
+    input {
+      border-radius: 8px;
+      margin-right: 8px;
+    }
+    button {
+      height: 32px;
+      width: 32px;
+      border-radius: 50%;
+      cursor: pointer;
+      background-color: rgb(135, 211, 135);
+      color: white;
+      font-size: 25px;
+      border: none;
+      box-shadow: 1px 3px 5px rgba(11, 30, 11, 0.3);
+
+      &:hover {
+        background-color: rgb(113, 184, 113);
+      }
+    }
+  }
+}
+
+.search-container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  width: 100%;
+  h2 {
+    font-size: 2.4rem;
+    margin-bottom: 16px;
+  }
+  input {
+    width: 100%;
+    margin-bottom: 32px;
+  }
+
+  li {
+    list-style: none;
+    border-bottom: 1px solid rgba(128, 128, 128, 0.2);
+    margin-bottom: 16px;
+    padding: 4px 0;
+    p {
+      font-size: 1.8rem;
+    }
+  }
+}
