@@ -41,6 +41,7 @@ export const AppUi: React.FC<AppUIProps> = ({
       <div className='search-container'>
         <TodoCounter total={totalTodos} totalCompleted={todosCompleted} />
         <TodoSearch onChange={handleSearch} timeout={700} />
+
         <TodoList>
           {todosSearch.map((todo, index) => (
             <TodoItem

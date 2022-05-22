@@ -4,18 +4,19 @@ import { AppUi } from './AppUi';
 
 import { Todo } from '../models/todo.model';
 
+import { useLocalStorageArray } from '../hooks/useLocalStorageArray';
+
 import './App.scss';
 
-const initData: Array<Todo> = [
-  { id: 0, text: 'dormir', completed: false },
-  { id: 1, text: 'pasear', completed: true },
-  { id: 2, text: 'saltar', completed: false },
-];
-
+const initTodos: Todo[] = [];
 const initTodo: Todo = { id: 0, text: '', completed: false };
+const localStorageVersion = 'TODOS_V1';
 
 function App() {
-  const [todos, setTodos] = useState<Array<Todo>>(initData);
+  const [todos, setTodos] = useLocalStorageArray<Todo>(
+    localStorageVersion,
+    initTodos
+  );
   const [todoNew, setTodoNew] = useState<Todo>(initTodo);
   const [search, setSearch] = useState<string>('');
 
@@ -27,10 +28,10 @@ function App() {
   const todosCompleted = todosSearch.filter((todo) => !!todo.completed).length;
 
   const addTodo = () => {
-    setTodos((todo) => {
-      return todoNew.text !== '' ? [...todos, todoNew] : todo;
-    });
-    setTodoNew(initTodo);
+    if (todoNew.text !== '') {
+      saveTodos([...todos, todoNew]);
+      setTodoNew(initTodo);
+    }
   };
 
   const onChange = (todoText: string) => {
@@ -50,12 +51,16 @@ function App() {
       return todo;
     });
 
-    setTodos(todoUpdate);
+    saveTodos(todoUpdate);
   };
 
   const deleteTodo = (id: Todo['id']) => {
     let deleteTodos = todos.filter((todo) => todo.id !== id);
-    setTodos(deleteTodos);
+    saveTodos(deleteTodos);
+  };
+
+  const saveTodos = (todos: Todo[]) => {
+    setTodos(todos);
   };
 
   return (
