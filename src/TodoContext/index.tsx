@@ -14,6 +14,8 @@ type TodoContextProps = {
   changeTodoState: any;
   deleteTodo: any;
   todoNew: any;
+  isOpenModal: boolean;
+  SetOpenModal: any;
 };
 
 export const TodoContext = createContext<TodoContextProps | null>(null);
@@ -33,6 +35,7 @@ export const TodoProvider: React.FC<TodoProviderProps> = ({ children }) => {
   );
   const [todoNew, setTodoNew] = useState<Todo>(initTodo);
   const [search, setSearch] = useState<string>('');
+  const [isOpenModal, SetOpenModal] = useState<boolean>(false);
 
   const todosSearch = todos.filter((todo) =>
     todo.text.toLowerCase().includes(search.toLowerCase())
@@ -87,6 +90,8 @@ export const TodoProvider: React.FC<TodoProviderProps> = ({ children }) => {
     changeTodoState,
     deleteTodo,
     todoNew,
+    isOpenModal,
+    SetOpenModal,
   };
 
   return <TodoContext.Provider value={value}>{children}</TodoContext.Provider>;
