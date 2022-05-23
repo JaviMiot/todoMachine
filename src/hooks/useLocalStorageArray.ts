@@ -5,7 +5,6 @@ export function useLocalStorageArray<T>(
   initValue: T[]
 ): [T[], React.Dispatch<React.SetStateAction<T[]>>] {
   const localStorageTodo = localStorage.getItem(localStorageItem);
-  const [item, setItem] = useState<Array<T>>(initValue);
 
   let parsedItem;
 
@@ -15,6 +14,7 @@ export function useLocalStorageArray<T>(
     localStorage.setItem(localStorageItem, JSON.stringify([]));
     parsedItem = initValue;
   }
+  const [item, setItem] = useState<Array<T>>(parsedItem);
 
   useEffect(() => {
     localStorage.setItem(localStorageItem, JSON.stringify(item));
