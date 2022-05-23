@@ -1,0 +1,13 @@
+{
+  "files": {
+    "main.css": "/github.io/todoMachine/static/css/main.bcefc5d5.css",
+    "main.js": "/github.io/todoMachine/static/js/main.c42c0e5a.js",
+    "index.html": "/github.io/todoMachine/index.html",
+    "main.bcefc5d5.css.map": "/github.io/todoMachine/static/css/main.bcefc5d5.css.map",
+    "main.c42c0e5a.js.map": "/github.io/todoMachine/static/js/main.c42c0e5a.js.map"
+  },
+  "entrypoints": [
+    "static/css/main.bcefc5d5.css",
+    "static/js/main.c42c0e5a.js"
+  ]
+}
