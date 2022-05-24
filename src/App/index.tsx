@@ -11,6 +11,8 @@ import { TodoItem } from '../components/TodoItem';
 import { InputTodo } from '../components/InputTodo';
 import { Modal } from '../components/Modal';
 
+import { Todo } from '../models/todo.model';
+
 import './App.scss';
 
 function App() {
@@ -83,16 +85,19 @@ function App() {
           <TodoSearch timeout={700} handleSearch={handleSearch} />
         </TodoHeader>
 
-        <TodoList>
-          {todosSearch.map((todo, index) => (
+        <TodoList
+          empty={totalTodos === 0}
+          searchTodos={todosSearch}
+          onEmpty={() => <p>create a task pls</p>}
+          render={(todo: Todo, index: number) => (
             <TodoItem
               key={index}
               todo={todo}
               changeTodoState={changeTodoState}
               deleteTodo={deleteTodo}
             />
-          ))}
-        </TodoList>
+          )}
+        />
       </div>
     </div>
   );
