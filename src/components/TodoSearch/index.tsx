@@ -1,19 +1,23 @@
-import React, { useContext } from 'react';
+import React from 'react';
 
 import debounce from 'lodash/debounce';
-import { TodoContext } from '../../TodoContext';
+
+import { TodoContextProps } from '../../hooks/useTodos';
 
 type TodoSearchProps = {
   timeout?: number;
+  handleSearch: TodoContextProps['handleSearch'];
 };
 
-export const TodoSearch: React.FC<TodoSearchProps> = ({ timeout = 1000 }) => {
-  const ctx = useContext(TodoContext);
+export const TodoSearch: React.FC<TodoSearchProps> = ({
+  timeout = 1000,
+  handleSearch,
+}) => {
   return (
     <input
       type='text'
       placeholder='search'
-      onChange={debounce(ctx?.handleSearch, timeout)}
+      onChange={debounce(handleSearch, timeout)}
     />
   );
 };

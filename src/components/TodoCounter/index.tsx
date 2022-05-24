@@ -1,12 +1,17 @@
-import React, { useContext } from 'react';
+import React from 'react';
 
-import { TodoContext } from '../../TodoContext';
+type TodoCounterProps = {
+  todosCompleted: number;
+  totalTodos: number;
+};
 
-export const TodoCounter = () => {
-  const ctx = useContext(TodoContext);
+export const TodoCounter: React.FC<TodoCounterProps> = ({
+  todosCompleted,
+  totalTodos,
+}) => {
   return (
     <h2>
-      Has completado {ctx?.todosCompleted} de {ctx?.totalTodos} TODOs
+      Has completado {todosCompleted} de {totalTodos} TODOs
     </h2>
   );
 };

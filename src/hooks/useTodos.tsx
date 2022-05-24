@@ -2,33 +2,27 @@ import React, { createContext, useState } from 'react';
 
 import { Todo } from '../models/todo.model';
 
-import { useLocalStorageArray } from '../hooks/useLocalStorageArray';
+import { useLocalStorageArray } from './useLocalStorageArray';
 
-type TodoContextProps = {
-  onChange: any;
-  addTodo: any;
+export type TodoContextProps = {
+  onChange: (todoText: string) => void;
+  addTodo: () => void;
   totalTodos: number;
   todosCompleted: number;
-  handleSearch: any;
+  handleSearch: (event: React.ChangeEvent<HTMLInputElement>) => void;
   todosSearch: Array<Todo>;
   changeTodoState: any;
-  deleteTodo: any;
+  deleteTodo: (id: Todo['id']) => void;
   todoNew: any;
   isOpenModal: boolean;
   SetOpenModal: any;
-};
-
-export const TodoContext = createContext<TodoContextProps | null>(null);
-
-type TodoProviderProps = {
-  children: React.ReactNode;
 };
 
 const initTodos: Todo[] = [];
 const initTodo: Todo = { id: 0, text: '', completed: false };
 const localStorageVersion = 'TODOS_V1';
 
-export const TodoProvider: React.FC<TodoProviderProps> = ({ children }) => {
+export const useTodos = () => {
   const [todos, setTodos] = useLocalStorageArray<Todo>(
     localStorageVersion,
     initTodos
@@ -80,7 +74,7 @@ export const TodoProvider: React.FC<TodoProviderProps> = ({ children }) => {
     setTodos(todos);
   };
 
-  const value: TodoContextProps = {
+  return {
     onChange,
     addTodo,
     totalTodos,
@@ -93,6 +87,4 @@ export const TodoProvider: React.FC<TodoProviderProps> = ({ children }) => {
     isOpenModal,
     SetOpenModal,
   };
-
-  return <TodoContext.Provider value={value}>{children}</TodoContext.Provider>;
 };
