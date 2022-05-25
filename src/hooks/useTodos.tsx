@@ -1,8 +1,10 @@
-import React, { createContext, useState } from 'react';
+import React, { useState } from 'react';
 
 import { Todo } from '../models/todo.model';
 
 import { useLocalStorageArray } from './useLocalStorageArray';
+
+import { config } from '../config';
 
 export type TodoContextProps = {
   onChange: (todoText: string) => void;
@@ -20,13 +22,15 @@ export type TodoContextProps = {
 
 const initTodos: Todo[] = [];
 const initTodo: Todo = { id: 0, text: '', completed: false };
-const localStorageVersion = 'TODOS_V1';
+const localStorageVersion = config().localStorageVersion;
 
 export const useTodos = () => {
-  const [todos, setTodos] = useLocalStorageArray<Todo>(
-    localStorageVersion,
-    initTodos
-  );
+  const {
+    item: todos,
+    setItem: setTodos,
+    sincronizeItem: sincronizeTodos,
+  } = useLocalStorageArray<Todo>(localStorageVersion, initTodos);
+
   const [todoNew, setTodoNew] = useState<Todo>(initTodo);
   const [search, setSearch] = useState<string>('');
   const [isOpenModal, SetOpenModal] = useState<boolean>(false);
@@ -35,7 +39,7 @@ export const useTodos = () => {
     todo.text.toLowerCase().includes(search.toLowerCase())
   );
 
-  const totalTodos = todosSearch.length;
+  const totalTodos = todos.length;
   const todosCompleted = todosSearch.filter((todo) => !!todo.completed).length;
 
   const addTodo = () => {
@@ -86,5 +90,7 @@ export const useTodos = () => {
     todoNew,
     isOpenModal,
     SetOpenModal,
+    searchText: search,
+    sincronizeTodos,
   };
 };

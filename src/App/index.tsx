@@ -10,6 +10,7 @@ import { CreateTodoButton } from '../components/CreateTodoButton';
 import { TodoItem } from '../components/TodoItem';
 import { InputTodo } from '../components/InputTodo';
 import { Modal } from '../components/Modal';
+import { ChangeAlertWithStorageListener } from '../components/ChangeAlert';
 
 import { Todo } from '../models/todo.model';
 
@@ -28,6 +29,8 @@ function App() {
     todoNew,
     isOpenModal,
     SetOpenModal,
+    searchText,
+    sincronizeTodos,
   } = useTodos();
 
   return (
@@ -77,7 +80,7 @@ function App() {
       </div>
 
       <div className='search-container'>
-        <TodoHeader>
+        <TodoHeader enabled={true}>
           <TodoCounter
             todosCompleted={todosCompleted}
             totalTodos={totalTodos}
@@ -88,8 +91,11 @@ function App() {
         <TodoList
           empty={totalTodos === 0}
           searchTodos={todosSearch}
+          searchText={searchText}
           onEmpty={() => <p>create a task pls</p>}
-          render={(todo: Todo, index: number) => (
+          onEmptySearch={(search: string) => <p>task don't find {search}</p>}
+        >
+          {(todo: Todo, index: number) => (
             <TodoItem
               key={index}
               todo={todo}
@@ -97,7 +103,9 @@ function App() {
               deleteTodo={deleteTodo}
             />
           )}
-        />
+        </TodoList>
+
+        <ChangeAlertWithStorageListener sincronize={sincronizeTodos} />
       </div>
     </div>
   );
