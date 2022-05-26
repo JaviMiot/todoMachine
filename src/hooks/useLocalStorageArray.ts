@@ -1,34 +1,39 @@
 import React, { useState, useEffect } from 'react';
 
 type useLocalStorageArrayReturn<T> = {
-  item: T[];
-  setItem: React.Dispatch<React.SetStateAction<T[]>>;
-  sincronizeItem: () => void;
+  items: T[];
+  saveItems: (items: T[]) => void;
+  syncronize: () => void;
 };
 
 export function useLocalStorageArray<T>(
   localStorageItem: string,
   initValue: T[]
 ): useLocalStorageArrayReturn<T> {
-  const localStorageTodo = localStorage.getItem(localStorageItem);
   const [sincronizeItems, setSincronizeItems] = useState(true);
-  let parsedItem;
-
-  if (localStorageTodo) {
-    parsedItem = JSON.parse(localStorageTodo);
-  } else {
-    localStorage.setItem(localStorageItem, JSON.stringify([]));
-    parsedItem = initValue;
-  }
-  const [item, setItem] = useState<Array<T>>(parsedItem);
+  const [items, setItems] = useState<Array<T>>(initValue);
 
   useEffect(() => {
-    localStorage.setItem(localStorageItem, JSON.stringify(item));
-  }, [sincronizeItems, item]);
+    const localStorageItems = localStorage.getItem(localStorageItem);
+    let parsedItem;
 
-  const sincronizeItem = () => {
-    setSincronizeItems(false);
+    if (localStorageItems) {
+      parsedItem = JSON.parse(localStorageItems);
+    } else {
+      localStorage.setItem(localStorageItem, JSON.stringify([]));
+      parsedItem = initValue;
+    }
+    setItems(parsedItem);
+  }, [sincronizeItems]);
+
+  const saveItems = (items: T[]) => {
+    localStorage.setItem(localStorageItem, JSON.stringify(items));
+    setItems(items);
   };
 
-  return { item, setItem, sincronizeItem };
+  const syncronize = () => {
+    setSincronizeItems((sincronizeItems) => !sincronizeItems);
+  };
+
+  return { items, saveItems, syncronize };
 }

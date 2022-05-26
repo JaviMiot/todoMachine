@@ -11,6 +11,7 @@ import { TodoItem } from '../components/TodoItem';
 import { InputTodo } from '../components/InputTodo';
 import { Modal } from '../components/Modal';
 import { ChangeAlertWithStorageListener } from '../components/ChangeAlert';
+import { ModalAddTodo } from '../components/Modal/ModalAddTodo';
 
 import { Todo } from '../models/todo.model';
 
@@ -46,35 +47,12 @@ function App() {
         </button>
         {isOpenModal && (
           <Modal>
-            <div
-              style={{
-                display: 'flex',
-                flexDirection: 'column',
-                alignItems: 'center',
-                justifyContent: 'center',
-                padding: '25px 15px',
-                border: '1px solid gray',
-                borderRadius: '8px',
-                width: '300px',
-                height: '200px',
-                backgroundColor: 'white',
-                boxShadow: '1px 3px 5px rgba(17, 16, 16, 0.5)',
-              }}
-            >
-              <p style={{ marginBottom: '16px' }}>Add new task</p>
-              <InputTodo onChange={onChange} value={todoNew.text} />
-              <div
-                style={{
-                  width: '100%',
-                  marginTop: '24px',
-                  display: 'flex',
-                  justifyContent: 'space-around',
-                }}
-              >
-                <button onClick={addTodo}>Accept</button>
-                <button onClick={() => SetOpenModal(false)}>Cancel</button>
-              </div>
-            </div>
+            <ModalAddTodo
+              onChange={onChange}
+              todoNew={todoNew}
+              addTodo={addTodo}
+              SetOpenModal={SetOpenModal}
+            />
           </Modal>
         )}
       </div>

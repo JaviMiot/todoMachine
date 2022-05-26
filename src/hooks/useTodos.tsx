@@ -26,9 +26,9 @@ const localStorageVersion = config().localStorageVersion;
 
 export const useTodos = () => {
   const {
-    item: todos,
-    setItem: setTodos,
-    sincronizeItem: sincronizeTodos,
+    items: todos,
+    saveItems: setTodos,
+    syncronize: sincronizeTodos,
   } = useLocalStorageArray<Todo>(localStorageVersion, initTodos);
 
   const [todoNew, setTodoNew] = useState<Todo>(initTodo);
